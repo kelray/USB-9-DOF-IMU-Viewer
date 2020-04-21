@@ -1,2 +1,5 @@
 # USB-9-DOF-IMU-Viewer
 Desktop app to view &amp; log MPU9250 9DOF Inertial Measurement Unit (IMU) data to PC
+
+# Screenshot:
+<img width="651" alt="MPU9250 IMU viewer_4" src="https://user-images.githubusercontent.com/8460504/79906511-c0d56900-83cc-11ea-8e9a-d2f5c6e4e380.png">
