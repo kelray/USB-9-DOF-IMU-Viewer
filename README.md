@@ -1,5 +1,7 @@
-# USB-9-DOF-IMU-Viewer
-Desktop app to view &amp; log MPU9250 9DOF Inertial Measurement Unit (IMU) data to PC.
+# MPU9250 9DOF IMU USB Viewer
+Desktop app to view &amp; log MPU9250 9DOF Inertial Measurement Unit (IMU) data to PC. The project is meant to be used by educators and instructors to demostrate motion sensing using a 9 degree-of-freedom inertial measurement unit.
+
+A GPS can be integrated into the system with minimum wiring for navigation and geomatics applications, please view the "Qt Geolocator" project published in 2019, repository: https://github.com/kelray/Qt-Geolocator
 
 **Project hardware:**
 
