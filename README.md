@@ -1,9 +1,11 @@
 # USB-9-DOF-IMU-Viewer
-Desktop app to view &amp; log MPU9250 9DOF Inertial Measurement Unit (IMU) data to PC
+Desktop app to view &amp; log MPU9250 9DOF Inertial Measurement Unit (IMU) data to PC.
 
 **Project hardware:**
 
-The hardware used is based on GY-9250 module (MPU9250 9DOF IMU sensor from InvenSense) and MCP2221A USB-to-I2C bridge from Microchip. The MCP2221A communicates with the MPU9250 via I2C interface only.
+The hardware used is based on GY-9250 module (MPU9250 9DOF IMU sensor from InvenSense) and MCP2221A USB-to-I2C bridge from Microchip. The MCP2221A communicates with the MPU9250 via I2C interface only. 
+
+Both the MCP2221A and the MPU9250 module are powered directly from the USB 5v power. The GY-9250 module has onboard 3.3v voltage regulator.
 
 **Schematic:**
 
@@ -14,11 +16,20 @@ The hardware used is based on GY-9250 module (MPU9250 9DOF IMU sensor from Inven
 <p align="center"> <img width="651" alt="MPU9250 IMU viewer_4" src="https://user-images.githubusercontent.com/8460504/79906511-c0d56900-83cc-11ea-8e9a-d2f5c6e4e380.png">
 
 **Libraries & Dependencies:**
+
 The GUI is developed using Qt framework version 4.11.0, source code might require changes if you are using an older version. 
 
 Interfacing the MCP2221A requires library and DLL from Microchip Technologies, the one used here is version 2.1.1 (uploaded among the rest of source code files).
 
 The communication between the MCP2221A and MPU9250 sensor is based on the MPU9250 Arduino library project developed by Bolder Flight Systems, this is original repository: https://github.com/bolderflight/MPU9250
+
+**Source code:**
+
+The code real-time plots data streaming from the 9DOF data from the MPU9250 on three different charts for acceleration, gyration and magnetic field in the X, Y and Z axes, data in the 9 directions can be saved to a CSV file if the "Save Data" checkbox is checked.
+
+The MPU9250 accelerometer and gyroscope full-scale ranges can be changed on-the-fly from the GUI. This feature doesn't apply to the magnetometer since it has a fixed full-scale range of 4800 uT.
+
+The MCP2221A has 4 GPIO pins that can be used for digital input, digital output, analog input and/or analog output. In this project I'm using the as digital output only. Each digital output can be set or reset by checking the corresponding checkbox in the GUI. The low- and high-voltage levels are 0v and 5v, respectively.
 
 **License:**
 
