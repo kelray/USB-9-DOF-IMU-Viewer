@@ -14,6 +14,7 @@ Both the MCP2221A and the MPU9250 module are powered directly from the USB 5v po
 <p align="center"> <img width="547" alt="mcp2221_mpu9250 schematic" src="https://user-images.githubusercontent.com/8460504/79907160-02b2df00-83ce-11ea-9564-a98e8b695fb7.png">
 
 <p align="center"> <img width="450" alt="GY9250" src= "https://hackster.imgix.net/uploads/attachments/221729/9250-1.jpg?auto=compress%2Cformat&w=1280&h=960&fit=max">
+ 
  Picture from: https://www.hackster.io/30503/using-the-mpu9250-to-get-real-time-motion-data-08f011
  
 **Screenshot:**
