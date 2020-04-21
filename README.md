@@ -13,9 +13,12 @@ The hardware used is based on GY-9250 module (MPU9250 9DOF IMU sensor from Inven
 
 <img width="651" alt="MPU9250 IMU viewer_4" src="https://user-images.githubusercontent.com/8460504/79906511-c0d56900-83cc-11ea-8e9a-d2f5c6e4e380.png">
 
-**Source Code:**
-
+**Libraries & Dependencies:**
+The GUI is developed using Qt framework version 4.11.0, source code might require changes if you are using an older version. Interfacing the MCP2221A requires library and DLL from Microchip Technologies, the one used here is version 2.1.1 (uploaded among the rest of source code files).
 The communication between the MCP2221A and MPU9250 sensor is based on the MPU9250 Arduino library project developed by Bolder Flight Systems, this is original repository: https://github.com/bolderflight/MPU9250
+
+**License: **
+
 
 
 
