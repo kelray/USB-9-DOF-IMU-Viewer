@@ -1,3 +1,4 @@
+//Error dictionary for MCP2221 and MCP2210 USB chips from Microchip Technologies
 #include <stdio.h>
 #include "GetErrName.h"
 
