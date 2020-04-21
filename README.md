@@ -42,7 +42,7 @@ The communication between the MCP2221A and MPU9250 sensor is based on the MPU925
 
  The views and conclusions contained in the software and documentation are
  those of the authors and should not be interpreted as representing official
- policies, either expressed or implied, of the author.
+ policies, either expressed or implied, by the author.
  
 Please let me know if you notice any errors or problems with the source code.
 
