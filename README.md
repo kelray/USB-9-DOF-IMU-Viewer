@@ -3,6 +3,8 @@ Desktop app to view &amp; log MPU9250 9DOF Inertial Measurement Unit (IMU) data 
 
 A GPS can be integrated into the system with minimum wiring for navigation and geomatics applications, please view the "Qt Geolocator" project published in 2019, repository: https://github.com/kelray/Qt-Geolocator
 
+Worth noting that the app works with MPU6050 6DOF IMU, except the magnetometer data is gibberish since it doesn't have one, and the full-scale ranges are different, yet works fine with it collecting acceleration and gyration data. 
+
 **Project hardware:**
 
 The hardware used is based on GY-9250 module (MPU9250 9DOF IMU sensor from InvenSense) and MCP2221A USB-to-I2C bridge from Microchip. The MCP2221A communicates with the MPU9250 via I2C interface only. 
