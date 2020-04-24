@@ -5,9 +5,9 @@ A GPS can be integrated into the system with minimum wiring for navigation and g
 
 **Worth noting** that the app works with MPU6050 6DOF IMU, except the magnetometer data is gibberish since it doesn't have one, and the full-scale ranges are different, yet the app is capable of collecting acceleration and gyration data. 
 
-**Project hardware:**
+**Hardware:**
 
-The hardware used is based on GY-9250 module (MPU9250 9DOF IMU sensor from InvenSense) and MCP2221A USB-to-I2C bridge from Microchip. The MCP2221A communicates with the MPU9250 via I2C interface only. 
+A GY-9250 IMU module (based on MPU9250 9DOF IMU sensor from InvenSense with other peripherals such as voltage regulator and pull-up resistors) is interfaced to an MCP2221A, a USB-to-UART/I2C bridge from Microchip, via I2C bus.
 
 Both the MCP2221A and the MPU9250 module are powered directly from the USB 5v power. The GY-9250 module has onboard 3.3v voltage regulator.
 
