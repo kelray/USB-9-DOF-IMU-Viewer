@@ -31,13 +31,15 @@ Interfacing the MCP2221A requires library and DLL from Microchip Technologies, t
 
 The communication between the MCP2221A and MPU9250 sensor is based on the MPU9250 Arduino library project developed by Bolder Flight Systems, this is original repository: https://github.com/bolderflight/MPU9250
 
-**Source code:**
+**Source Code:**
 
 The code real-time plots data streaming from the 9DOF data from the MPU9250 on three different charts for acceleration, gyration and magnetic field in the X, Y and Z axes, data in the 9 directions can be saved to a CSV file if the "Save Data" checkbox is checked.
 
 The MPU9250 accelerometer and gyroscope full-scale ranges can be changed on-the-fly from the GUI. This feature doesn't apply to the magnetometer since it has a fixed full-scale range of ±4800 μT.
 
 The MCP2221A has 4 GPIO pins that can be used for digital input, digital output, analog input and/or analog output. In this project I'm using the as digital output only. Each digital output can be set or reset by checking the corresponding checkbox in the GUI. The low- and high-voltage levels are 0v and 5v, respectively.
+
+**For further learning** on how to use the MCP2221 USB-to-UART/I2C bridge please check this tutorial: http://elrayescampaign.blogspot.com/2016/06/mcp2221-tutorial-easy-usb-interfacing.html
 
 **License:**
 
