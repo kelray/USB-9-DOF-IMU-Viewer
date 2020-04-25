@@ -3,7 +3,7 @@ Desktop app to view &amp; log MPU9250 9DOF Inertial Measurement Unit (IMU) data 
 
 A GPS can be integrated into the system with minimum wiring for navigation and geomatics applications, please view the "Qt Geolocator" project published in 2019, repository: https://github.com/kelray/Qt-Geolocator
 
-**Worth noting** that the app works with MPU6050 6DOF IMU, except the magnetometer data is gibberish since it doesn't have one, and the full-scale ranges are different, yet the app is capable of collecting acceleration and gyration data. 
+**Worth noting** that the app works with MPU6050 6DOF IMU since it shares with the MPU9250 the same registers set for the accelerometer and gyroscope, and of course the magnetometer data is gibberish since it doesn't have one. The full-scale ranges are different as well, yet the app is capable of collecting acceleration and gyration data. 
 
 **Hardware:**
 
