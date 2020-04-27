@@ -35,4 +35,4 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-win32:LIBS = "C:\\mcp2221_dll_um_x86.lib"
+win32:LIBS = "..\\mcp2221_dll_um_x86.lib"
