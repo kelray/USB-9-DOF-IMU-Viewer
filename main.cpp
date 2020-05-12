@@ -28,6 +28,9 @@
 #include <QTabWidget>
 #include <QMenuBar>
 #include <QCheckBox>
+#include <QTime>
+#include <QDate>
+#include <QDateTime>
 #include <QApplication>
 #include <stdio.h>
 #include <conio.h>
@@ -43,10 +46,8 @@ QString string;
 QTextEdit *TextBox;
 QTextEdit *ADCdataBox;
 QVector<double> x(101), y(101);
-int i;
-int phase = 0;
+int i = 0, j = 0;
 unsigned char RxData[7];
-unsigned int tempADCreading = 0;
 unsigned char TxData[2];
 
 //Chart variables
@@ -76,6 +77,7 @@ QLineSeries *seriesMz;
 QChart *chartMagneto;
 QPointF numMx, numMy, numMz;
 QValueAxis *axisYMagneto;
+QPointF numIMU[9];
 
 //checkboxes
 QCheckBox *GPIO0chkBx;
@@ -127,8 +129,10 @@ unsigned int NegativeFlag = 0;
 #define I2cAddr8bit 0
 
 //File logging variables
-FILE * logFile;		//Create file to save temperature log
+FILE * logFile;		
 int fileFlag = 0;
+QString fileName;
+char FileName[80] = "log-";
 
 //Create instance of MPU9250
 extern unsigned char MPU9250_I2C_ADDR; 	//default MPU9250 I2C address
@@ -169,6 +173,9 @@ void Mcp2221_config()
         string = "Number of devices found: " + QString::number(NumOfDev);
         TextBox->append(string);
     }
+
+    //open device by S/N
+    //handle = Mcp2221_OpenBySN(VID, PID, &SerNum);
 
     //Open device by index
     handle = Mcp2221_OpenByIndex(VID, PID, NumOfDev-1);
@@ -282,12 +289,27 @@ void MainWindow::ChkBxCallback(int index)
     else
         OutValues[3] = 0;
 
+	//Logging MPU9250 data to a CSV file
     if(SaveTofilechkbx->isChecked())
+    {
             fileFlag = 1;
+            if(!logFile)	//check if a logging file exists and create one if it doesn't
+            {
+                logFile = fopen(FileName, "a+");
+                fprintf(logFile,"Ax,Ay,Az,Gx,Gx,Gz,Mx,My,Mz,Temperature\n");
+            }
+    }
     else
         fileFlag = 0;
 
     Mcp2221_SetGpioValues(handle, OutValues);
+}
+
+//Logging timer
+void MainWindow::LogTimeCb()
+{
+    //fclose(logFile);
+    exit(0);
 }
 
 //Chart plotting callback
@@ -326,12 +348,14 @@ void MainWindow::updateChart()
     numY.setY(IMUval[1]);
     numZ.setX(count);
     numZ.setY(IMUval[2]);
+
     numYaw.setX(count);
     numYaw.setY(IMUval[3]);
     numPitch.setX(count);
     numPitch.setY(IMUval[4]);
     numRoll.setX(count);
     numRoll.setY(IMUval[5]);
+	
     numMx.setX(count);
     numMx.setY(IMUval[6]);
     numMy.setX(count);
@@ -348,14 +372,12 @@ void MainWindow::updateChart()
     seriesMx->append((numMx));
     seriesMy->append((numMy));
     seriesMz->append((numMz));
-	
+
     if(fileFlag == 1)
     {
         fprintf(logFile, "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
-                IMU.getAccelX_mss(), IMU.getAccelY_mss(), IMU.getAccelZ_mss(),
-                IMU.getGyroX_rads(), IMU.getGyroY_rads(), IMU.getGyroZ_rads(),
-                IMU.getMagX_uT(), IMU.getMagY_uT(), IMU.getMagZ_uT(),
-                IMU.getTemperature_C());
+                IMUval[0],IMUval[1],IMUval[2],IMUval[3],IMUval[4],IMUval[5],
+                IMUval[6],IMUval[7],IMUval[8],IMU.getTemperature_C());
     }
 }
 
@@ -439,7 +461,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
     w.setFixedSize(1300, 900);
-    w.setWindowTitle("MPU9250 9-DOF IMU Viewer"); 
+    w.setWindowTitle("MPU9250 9-DOF IMU Viewer");   //Set the window title
+
     atexit(ExitFunc);	//register exit function
 
     //Label 1 - MCP2221 info
@@ -507,6 +530,7 @@ int main(int argc, char *argv[])
 
     //Accelerometer Chart
     chartAcc = new QChart();
+    //chartAcc->setGeometry(15, 15, 620, 450);
     chartAcc->legend()->show();
 
     //Acelerometer char axes
@@ -530,6 +554,7 @@ int main(int argc, char *argv[])
     seriesZ->attachAxis(axisXAcc);
     seriesZ->attachAxis(axisYAcc);
 
+    //chartAcc->createDefaultAxes();         //comment this line for dynamic axes
     chartAcc->setTitle("MPU9250 Accelerometer Reading");
     chartAcc->setPlotAreaBackgroundVisible(true);
     chartAcc->setBackgroundVisible(false);
@@ -537,6 +562,7 @@ int main(int argc, char *argv[])
     //Create Accelerometer Chart View Widget
     chartViewAcc = new QChartView(chartAcc, &w);
     chartViewAcc->setGeometry(15, 15, 620, 450);
+	
     /********************************************************************/
     //MPU9250 Gyroscope chart
     //Create line series for gX,gY,gZ
@@ -558,6 +584,7 @@ int main(int argc, char *argv[])
     QValueAxis *axisXGyro = new QValueAxis;
     axisXGyro->setRange(x1RangeMin, x1RangeMax);
     axisXGyro->setTitleText("Time");
+
     axisYGyro = new QValueAxis;
     axisYGyro->setRange(yGyroRangeMin, yGyroRangeMax);
     axisYGyro->setTitleText("Gyration (°/sec)");
@@ -584,6 +611,7 @@ int main(int argc, char *argv[])
     chartViewGyro = new QChartView(chartGyro, &w);
     chartViewGyro->setGeometry(650, 15, 620, 450);
     /*********************************************************************************/
+
     //Create line series for aX,aY,aZ
     seriesMx = new QLineSeries();
     seriesMx->setName("Mag. X");
@@ -597,7 +625,6 @@ int main(int argc, char *argv[])
 
     //Magnetometer Chart
     chartMagneto = new QChart();
-    //chartMagneto->setGeometry(15, 15, 620, 450);
     chartMagneto->legend()->show();
 
     //magnetometer axes
@@ -621,7 +648,6 @@ int main(int argc, char *argv[])
     seriesMz->attachAxis(axisXMagneto);
     seriesMz->attachAxis(axisYMagneto);
 
-    //chartMagneto->createDefaultAxes();
     chartMagneto->setTitle("MPU9250 Magnetometer Reading");
     chartMagneto->setPlotAreaBackgroundVisible(true);
     chartMagneto->setBackgroundVisible(false);
@@ -629,24 +655,33 @@ int main(int argc, char *argv[])
     //Create Accelerometer Chart View Widget
     chartViewMagneto = new QChartView(chartMagneto, &w);
     chartViewMagneto->setGeometry(660, 435, 620, 450);
-    
-	/*********************************************************************************/
+    /*********************************************************************************/
+
     //plotting timer and connect it to real-time slot
     QTimer *timer = new QTimer(&w);
     QObject::connect(timer, SIGNAL(timeout()), &w, SLOT(updateChart()));
     timer->start(0);    //Interval 0 means to refresh as fast as possible
     /*********************************************************************************/
-	
-    //Create a log file
-    logFile = fopen("log.csv", "a+");
-    if(logFile != NULL)
-    {
-        fprintf(logFile,"Ax,Ay,Az,Gx,Gx,Gz,Mx,My,Mz,Temperature\n");
-    }  
-    Mcp2221_config();				//Configure any connected MCP2221    
-    int status = IMU.begin();		// start communication with IMU
-    //qDebug("MPU9250 status: %d\n", status);	//Internal check
 
+    //Get time stamp for logging file name
+    char *LocalTime = 0;
+    char temp[24] = {0};
+    time_t LogTime;	//Local time at the time of creation
+    struct tm * timeinfo;
+
+    time(&LogTime);
+    LocalTime = ctime(&LogTime);
+    timeinfo = localtime (&LogTime);
+    strftime(temp, sizeof(temp), "%d%b%Y-%H-%M-%S", timeinfo);	//day-month-year-hour-minute-second
+    strcat(FileName, temp);
+    strcat(FileName, ".csv");
+
+    //Configure any connected MCP2221
+    Mcp2221_config();
+
+    // start communication with IMU
+    int status = IMU.begin();
+    qDebug("MPU9250 status: %d\n", status);
     w.show();
 
     QObject::connect(AccFscaleDropList, SIGNAL(currentIndexChanged(int)), &w, SLOT(AccScale(int)));
