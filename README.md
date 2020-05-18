@@ -33,7 +33,7 @@ The communication between the MCP2221A and MPU9250 sensor is based on the MPU925
 
 **Source Code:**
 
-The code real-time plots data streaming from the 9DOF data from the MPU9250 on three different charts for acceleration, gyration and magnetic field in the X, Y and Z axes, data in the 9 directions can be saved to a CSV file if the "Save Data" checkbox is checked.
+The code plots real-time data streaming from MPU9250 sensor to three different charts for acceleration, gyration and magnetic field in the X, Y and Z axes, data is saved to a CSV file when "Save Data" checkbox is checked.
 
 The MPU9250 accelerometer and gyroscope full-scale ranges can be changed on-the-fly from the GUI. This feature doesn't apply to the magnetometer since it has a fixed full-scale range of ±4800 μT.
 
