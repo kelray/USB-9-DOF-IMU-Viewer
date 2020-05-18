@@ -1,7 +1,7 @@
 # MPU9250 9DOF IMU USB Viewer
 This is a desktop app to view motion data from MPU9250 9-DOF Inertial Measurement Unit (IMU) sensor. The project is meant to be used by educators and instructors to demostrate motion sensing from acceleration, gyration and earth magnetic field captured by the IMU.
 
-A GPS can be integrated into the system with minimum wiring for navigation and geomatics applications, please view the "Qt Geolocator" project published in 2019, repository: https://github.com/kelray/Qt-Geolocator
+A GPS can be integrated into the system with minimum wiring for navigation and geomatics applications, please visit the "Qt Geolocator"  repository for more information: https://github.com/kelray/Qt-Geolocator
 
 **Worth noting** that the app works with MPU6050 6DOF IMU since it shares with the MPU9250 the same registers set for the accelerometer and gyroscope, and of course the magnetometer data is gibberish since it doesn't have one. The full-scale ranges are different as well, yet the app is capable of collecting acceleration and gyration data. 
 
